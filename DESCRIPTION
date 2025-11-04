@@ -1,16 +1,60 @@
 Package: SeuratSourcery
 Type: Package
-Title: What the Package Does (Title Case)
+Title: A data harmonization package for scRNA-seq data integration projects
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Joseph", "Duraisingh",
+      email = "josephduraisingh@gmail.com",
       role = c("aut", "cre")
+      comment = c(ORCID = "0009-0000-9548-9256")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Description: SeuratSourcery is a comprehensive all in one tool that allows for
+    various single cell transcriptomic datasets to be merged into a single 
+    differential expression analysis cleanly. Accepted file types so far include
+    .rds, .h5ad, .loom, .csv and 10x reads. Intended for downstream analysis 
+    in Seurat.
+License: MIT + file LISCENSE
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 4.5.1)
+Imports:
+    Seurat,
+    SeuratDisk,
+    Matrix,
+    zellkonverter,
+    dplyr,
+    tibble,
+    purrr,
+    stringr,
+    readr,
+    readxl,
+    glue,
+    ggplot2,
+    UpSetR,
+    cowplot,
+    biomaRt,
+    AnnotationDbi,
+    org.Hs.eg.db,
+    cli,
+    rlang,
+    progress,
+    DelayedArray,
+    HDF5Array
+Suggests:
+    testthat,
+    rmarkdown,
+    knitr,
+    plotly,
+    shiny,
+    ontologyIndex,
+    ontologyPlot,
+    scater,
+    patchwork,
+    homologene
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+VignetteBuilder: knitr
+URL: https://github.com/josephDURAISINGH/SeuratSourcery
+BugReports: https://github.com/josephDURAISINGH/SeuratSourcery/issues
