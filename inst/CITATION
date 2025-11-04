@@ -1,0 +1,14 @@
+citHeader("To cite SeuratSourcery in publications use:")
+
+citEntry(entry = "Unpublished",
+  title        = "SeuratSourcery: A magical data harmonization tool for scRNAseq integration experiments",
+  author       = "Joseph Duraisingh",
+  note         = "Updated version with revisions",
+  year         = "2025",
+  url          = "https://github.com/josephduraisingh/SeuratSourcery",
+
+
+  textVersion  =
+  paste("Duraisingh, J. (2025) SeuratSourcery: A magical data harmonization tool for scRNAseq integration experiments.
+        Unpublished. URL https://github.com/josephduraisingh/SeuratSourcery.")
+)
