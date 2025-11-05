@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 # SeuratSourcery
-An Example R Package For BCB410H: Applied Bioinformatics.
+A data harmonization package for scRNA-seq data integration projects
 
 <!-- badges: start -->
 <!-- https://www.codefactor.io/repository/github/josephduraisingh/SeuratSourcery/issues -->
@@ -91,7 +91,7 @@ Provide a paragraph clearly indicating the name of the author of the package and
 <br>
 <br>
 
-The author of the package is Joseph Duraisingh.
+The author of the package is Joseph Duraisingh. Joseph contributed to all functions written in this package. THis author also worked independently on function design and package ideation. A lot of functionality comes from the seurat package. ChatGPT was used to aid with certain tasks like debugging, finding edgecases, suggesting the use of packages such as purrr and cli. Also aided in generation of Roxygen formatting.
 
 
 ## References
@@ -126,11 +126,6 @@ This package was developed as part of an assessment for 2025 BCB410H: Applied Bi
 
 ## Package Structure
 
-The package structure is illustrated below:
-
-![](./inst/extdata/SILVA_A_A2.png)
-<br>
-<br>
 The package tree structure is provided below.
 
 ``` r
