@@ -1,0 +1,94 @@
+---
+title: "SeuratSourcery: A Quickstart Guide"
+author: "Joseph Duraisingh"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SeuratSourcery: A Quickstart Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = TRUE
+)
+```
+
+Installation
+You can install the development version from GitHub:
+```{r}
+# install.packages("devtools")
+devtools::install_github("josephDURAISINGH/SeuratSourcery")
+```
+Optional dependencies for H5AD and H5Seurat support:
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install(c("zellkonverter", "HDF5Array", "DelayedArray"))
+```
+Quickstart Example
+1. Load packages
+Writing
+```{r}
+library(SeuratSourcery)
+library(Seurat)
+library(ggplot2)
+```
+2. Create mock data
+Writing
+```{r}
+demo_rune_data <- function(n_genes = 100, n_cells = 50) {
+mat <- matrix(
+rpois(n_genes * n_cells, lambda = 5),
+nrow = n_genes, ncol = n_cells,
+dimnames = list(paste0("Gene", seq_len(n_genes)),
+paste0("Cell", seq_len(n_cells)))
+)
+Seurat::CreateSeuratObject(counts = mat)
+}
+```
+Generate a few small example datasets
+```{r}
+set.seed(123)
+runes <- list(
+Sample_A = demo_rune_data(),
+Sample_B = demo_rune_data()
+)
+```
+3. Harmonize datasets
+Writing
+```{r}
+runes_harmonized <- activateRune(runes)
+```
+
+This step ensures all datasets share consistent gene identifiers, metadata column names, and assay structure.
+It also adds versioned metadata under the @misc slot for reproducibility.
+
+4. Inspect and visualize
+Writing
+```{r}
+report <- runeInspection(runes_harmonized)
+getSourceryReport(report)
+```
+
+This produces summary tables and plots showing dataset sizes, gene overlaps, and metadata coverage.
+5. Integrate datasets
+Writing
+```{r}
+integrated_obj <- basicIntegration(runes_harmonized, dims = 1:10)
+integrated_obj
+```
+The integrated object can then be used in standard Seurat downstream workflows (e.g., PCA, clustering, visualization).
+6. Full pipeline (one-liner)
+Writing
+```{r}
+final_obj <- performSourcery(path = "path/to/datasets", method = "standard", dims = 1:10)
+```
+This combines loading, harmonization, inspection, and integration in a single reproducible step.
+
+
