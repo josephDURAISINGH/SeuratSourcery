@@ -1,0 +1,188 @@
+---
+output: github_document
+---
+
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# SeuratSourcery
+An Example R Package For BCB410H: Applied Bioinformatics.
+
+<!-- badges: start -->
+<!-- https://www.codefactor.io/repository/github/josephduraisingh/SeuratSourcery/issues -->
+[![CodeFactor](https://www.codefactor.io/repository/github/josephduraisingh/SeuratSourcery/badge)](https://www.codefactor.io/repository/github/josephduraisingh/SeuratSourcery) [![GitHub issues](https://img.shields.io/github/issues/josephduraisingh/SeuratSourcery)](https://github.com/josephduraisingh/SeuratSourcery/issues)  [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE) ![GitHub language count](https://img.shields.io/github/languages/count/josephduraisingh/SeuratSourcery) ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/y/josephduraisingh/SeuratSourcery/master)
+
+<!-- https://shields.io/category/license -->
+<!-- badges: end -->
+
+## Description
+
+A paragraph that describes the purpose of your R package and biological data being analyzed. Explain how your package add to or improve a current work flow in bioinformatics or computational biology (i.e., how is it unique?, what issue does it address?). Finally, include the R version (not RStudio version) and platform (Mac, Windows, Linux (Debian, Fedora/Redhat, Ubuntu)), used to develop the package. You may obtain this information by running ``` utils::sessionInfo()```. There should be no `Shiny` implementation at this point. E.g., 
+<br>
+<br>
+<br>
+
+This package is used to analyze single-cell RNA seq data, specifically being used to compare multiple different datasets together with the help of the Seurat package. This technique called data integration can come up with some very powerful biological analyses (See https://satijalab.org/seurat/articles/integration_introduction for more info on this kind of experiment). One downside is the way in which publically available datasets come in different formats and levels of compatible overlap. SeuratSourcery offers a comprehensive and simple to use way to take messy assortments of data and output them in a format harmonized and ready for downstream analysis on seurat. The `SeuratSourcery` package was developed using `R version 4.5.1 (2025-06-13)`, `Platform: aarch64-apple-darwin20` and `Running under: macOS Sequoia 15.5`.
+
+
+## Installation
+
+Provide the following text and commands, customized to your R package. E.g., 
+<br>
+<br>
+<br>
+To install the latest version of the package:
+``` r
+install.packages("devtools")
+library("devtools")
+devtools::install_github("josephduraisingh/SeuratSourcery", build_vignettes = TRUE)
+library("SeuratSourcery")
+#It is recommended to install BiocManager and bioMart as they help with a key fuctionality of gene harmonization
+```
+To run the Shiny app:
+``` r
+runSeuratSourcery() # not for Assessment 4; only for Assessment 5
+``` 
+
+
+## Overview
+
+Provide the following commands, customized to your R package. Then provide a list of user accessible functions within the package and a brief description of each. Include one image illustrating the overview of the package that shows the inputs and outputs. Ensure the image is deposited in the correct location, as discussed in class. Point the user to vignettes for a tutorial of your package. E.g., 
+<br>
+<br>
+<br>
+``` r
+ls("package:SeuratSourcery")
+data(package = "SeuratSourcery") 
+browseVignettes("SeuratSourcery")
+```
+`SeuratSourcery` contains 6 functions.
+
+1.  ****summonData*** Points to the folder and reads in the files and converts them to seurat objects
+
+2.  ***runeInspection*** Compares different metrics between the datasets such as gene overlap 
+
+3.  ***getSourceryReport*** Outputs graphs that represent these metrics
+
+4. ***activateRune*** Does various harmonization techniques such as making sure gene names are in compatible formats
+
+5. ***performSourcery*** a wrapper function that goes through the whole pipeline
+
+6. ***basicIntegration*** Runs a simple seurat integration pipeline (recommended to do your own seurat integration as shown in the link above)
+
+Recommended to download your own data since it single cell data is too large to include here but can use ***demo_rune_data*** to load in a small mock dataset
+
+
+## Contributions
+
+Provide a paragraph clearly indicating the name of the author of the package and contributions from the author. Outline contributions from other packages/sources for each function. Outline contributions from generative AI tool(s) for each function. Include how the tools were used and how the results from AI tools were incorporated. Remember your individual contributions to the package are important. E.g., 
+<br>
+<br>
+<br>
+
+The author of the package is Joseph Duraisingh.
+
+
+## References
+
+Provide full references for all sources used, including for the packages and tools mentioned under 'Contributions', in one format. E.g., 
+<br>
+<br>
+
+If you use SeuratSourcery in your work, please cite the following tools and frameworks:
+Seurat v5 — Hao, Y., Hao, S., Andersen-Nissen, E. et al. (2021). Integrated analysis of multimodal single-cell data. Cell, 184(13), 3573–3587.e29. https://doi.org/10.1016/j.cell.2021.04.048
+SCTransform — Hafemeister, C. & Satija, R. (2019). Normalization and variance stabilization of single-cell RNA-seq data using regularized negative binomial regression. Genome Biology, 20, 296. https://doi.org/10.1186/s13059-019-1874-1
+zellkonverter / HDF5Array / DelayedArray / SeuratDisk — Amezquita, R. A. et al. (2020). Orchestrating single-cell analysis with Bioconductor. Nature Methods, 17, 137–145. https://doi.org/10.1038/s41592-019-0654-x
+HDF5Array — Pagès, H. et al. (2024). HDF5Array: HDF5 backend for DelayedArray objects. R package version 1.31.0. https://bioconductor.org/packages/HDF5Array/
+purrr — Wickham, H. & Henry, L. (2023). purrr: Functional Programming Tools. R package version 1.0.2. https://CRAN.R-project.org/package=purrr
+cli — Csárdi, G. (2023). cli: Helpers for Developing Command Line Interfaces. R package version 3.6.2. https://CRAN.R-project.org/package=cli
+ggplot2 — Wickham, H. (2016). ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York. https://doi.org/10.1007/978-3-319-24277-4
+Matrix — Bates, D. & Maechler, M. (2024). Matrix: Sparse and Dense Matrix Classes and Methods. R package version 1.7-0. https://CRAN.R-project.org/package=Matrix
+testthat — Wickham, H. (2011). testthat: Get Started with Testing. The R Journal, 3(1), 5–10. https://journal.r-project.org/archive/2011/RJ-2011-002/
+roxygen2 — Wickham, H., Danenberg, P., & Csárdi, G. (2024). roxygen2: In-Line Documentation for R. R package version 7.3.2. https://CRAN.R-project.org/package=roxygen2
+
+
+
+
+
+## Acknowledgements
+
+<br>
+<br>
+<br>
+This package was developed as part of an assessment for 2025 BCB410H: Applied Bioinformatics course at the University of Toronto, Toronto, CANADA. `SeuratSourcery` welcomes issues, enhancement requests, and other contributions. To submit an issue, use the [GitHub issues](https://github.com/josephduraisingh/SeuratSourcery/issues). Many thanks to those who provided feedback to improve this package.
+
+
+## Package Structure
+
+The package structure is illustrated below:
+
+![](./inst/extdata/SILVA_A_A2.png)
+<br>
+<br>
+The package tree structure is provided below.
+
+``` r
+SeuratSourcery/
+├── DESCRIPTION
+├── NAMESPACE
+├── LICENSE
+├── README.Rmd
+├── README.md
+├── .Rbuildignore
+├── .gitignore
+│
+├── R/
+│   ├── summonData.R
+│   ├── activateRune.R
+│   ├── runeInspection.R
+│   ├── getSourceryReport.R
+│   ├── basicIntegration.R
+│   ├── performSourcery.R
+│
+├── man/
+│   ├── loadRune.Rd
+│   ├── activateRune.Rd
+│   ├── runeInspection.Rd
+│   ├── getSourceryReport.Rd
+│   ├── basicIntegration.Rd
+│   └── performSourcery.Rd
+│
+├── inst/
+│   ├── CITATION              # formatted citation entry for your package
+│   └── REFERENCES.bib        # optional BibTeX file for vignette
+│
+├── vignettes/
+│   ├── SeuratSourcery-demo.Rmd
+│   └── figures/              # optional, for images/plots in vignettes
+│
+├── tests/
+│   ├── testthat.R
+│   └── testthat/
+│       ├── helper-data.R
+│       ├── test-summonData.R
+│       ├── test-activateRune.R
+│       ├── test-runeInspection.R
+│       ├── test-getSourceryReport.R
+│       ├── test-basicIntegration.R
+│       └── test-performSourcery.R
+│
+├── data/
+│   └── demo_rune_data.rda    # small example dataset (optional)
+│
+└── .github/
+    └── workflows/
+        └── R-CMD-check.yaml  # GitHub Actions for automated testing
+
+```

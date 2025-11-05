@@ -15,46 +15,37 @@ Description: SeuratSourcery is a comprehensive all in one tool that allows for
     differential expression analysis cleanly. Accepted file types so far include
     .rds, .h5ad, .loom, .csv and 10x reads. Intended for downstream analysis 
     in Seurat.
-License: MIT + file LISCENSE
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 4.5.1)
+Depends: R (>= 4.3)
 Imports:
-    Seurat,
-    SeuratDisk,
-    Matrix,
-    zellkonverter,
-    dplyr,
-    tibble,
-    purrr,
-    stringr,
-    readr,
-    readxl,
-    glue,
-    ggplot2,
-    UpSetR,
-    cowplot,
-    biomaRt,
-    AnnotationDbi,
-    org.Hs.eg.db,
+    Seurat (>= 5.0.0),
+    SeuratObject (>= 5.0.0),
     cli,
+    dplyr,
+    purrr,
+    tibble,
+    ggplot2,
+    readr,
+    stringr,
+    Matrix,
     rlang,
-    progress,
-    DelayedArray,
-    HDF5Array
+    tools,
+    utils
 Suggests:
-    testthat,
-    rmarkdown,
+    SeuratDisk,
+    zellkonverter,
+    HDF5Array,
+    DelayedArray,
+    BiocManager,
+    biomaRt,
     knitr,
-    plotly,
-    shiny,
-    ontologyIndex,
-    ontologyPlot,
-    scater,
-    patchwork,
-    homologene
+    rmarkdown,
+    testthat (>= 3.0.0)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 URL: https://github.com/josephDURAISINGH/SeuratSourcery
 BugReports: https://github.com/josephDURAISINGH/SeuratSourcery/issues
+Config/testthat/edition: 3
