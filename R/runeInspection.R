@@ -8,27 +8,38 @@
 #'
 #' Performs a pre-harmonization scan across Seurat objects.
 #' Summarizes gene counts, identifier types, assay structures, and metadata.
+#' Compares datasets by quantifying overlaps.
+#' Uses key lightweight diagnostics to help determine compatability between datsets for integration
 #'
 #' @param datasets A list of Seurat objects.
-#' @param sample_names Optional character vector naming each dataset.
-#' @param verbose Logical; display progress messages.
+#'
 #' @return A list containing:
 #' \describe{
 #'   \item{summary}{Tibble summarizing dataset-level metrics.}
 #'   \item{overlap}{Matrix of feature overlaps between datasets.}
 #'   \item{common_meta}{Vector of metadata fields shared by all datasets.}
-#'   \item{notes}{Text summary.}
+#'   \item{unique_meta}{List of the unique metadata fields}
+#'   \item{datasets}{The input datasets get passed out to be accessed downstream}
 #' }
+#'
+#' @details
+#' Does not modify the seurat objects, only extracts data out of them.
+#' Checking for differences and whats going on under the hood for each dataset
+#'
 #' @examples
-#' \dontrun{
-#' runes <- loadRune("data/")
-#' report <- runeInspection(runes)
+#' #using demo data
+#' demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
+#' if (dir.exists(demo_dir)) {
+#'   runes <- summonData(demo_dir)
+#'   insp <- runeInspection(runes)
+#'   print(insp$summary)
 #' }
-#' @seealso [getSourceryReport()], [runeInspection()]
+#' @seealso [summonData()] for loading data,
+#'  [activateRune()] for harmonization,
+#'  [getSourceryReport()] for visualizations
 #' @export
 
 # ------ Outward facing function -------------
-#Try 2
 
 runeInspection <- function(datasets) {
   if (!is.list(datasets)) stop("'datasets' must be a list", call. = FALSE)
@@ -44,18 +55,31 @@ runeInspection <- function(datasets) {
   # gene + cell summary
   summary_tbl <- tibble::tibble(
     Dataset = nm,
-    Genes   = purrr::map_int(counts_list, nrow),
-    Cells   = purrr::map_int(counts_list, ncol),
-    Example_Gene = purrr::map_chr(counts_list, ~ rownames(.x)[1] %||% NA_character_)
+    Genes = purrr::map_int(counts_list, nrow),
+    Cells = purrr::map_int(counts_list, ncol),
+    Mean_NonZero_Genes = purrr::map_dbl(
+      counts_list,
+      ~ mean(Matrix::colSums(.x > 0))
+    ),
+    Mean_UMI_Per_Cell = purrr::map_dbl(
+      counts_list,
+      ~ mean(Matrix::colSums(.x))
+    ),
+    Example_Gene = purrr::map_chr(
+      counts_list,
+      ~ rownames(.x)[1] %||% NA_character_
+    )
   )
 
   # Gene type guess
-  summary_tbl$ID_Type <- purrr::map_chr(summary_tbl$Example_Gene, function(g) {
-    if (is.na(g)) return("unknown")
-    if (grepl("^ENS", g, ignore.case = TRUE)) return("ensembl")
-    if (grepl("^[A-Za-z0-9-]+$", g)) return("symbol")
-    return("mixed")
-  })
+  # summary_tbl$ID_Type <- purrr::map_chr(summary_tbl$Example_Gene, function(g) {
+  #   if (is.na(g)) return("unknown")
+  #   if (grepl("^ENS", g, ignore.case = TRUE)) return("ensembl")
+  #   if (grepl("^[A-Za-z0-9-]+$", g)) return("symbol")
+  #   return("mixed")
+  # })
+  summary_tbl$ID_Type <- purrr::map_chr(summary_tbl$Example_Gene, guess_gene_type)
+
 
   # Gene overlap
   gene_lists <- purrr::map(counts_list, rownames)
@@ -69,19 +93,18 @@ runeInspection <- function(datasets) {
   rownames(overlap_mat) <- colnames(overlap_mat) <- nm
 
   # metadata overlap
-  meta_lists <- purrr::map(datasets, ~ colnames(.x@meta.data))
+  meta_lists <- purrr::map(datasets, ~ colnames(.x[]))
   common_meta <- Reduce(intersect, meta_lists)
   unique_meta <- purrr::map(meta_lists, setdiff, y = common_meta)
 
   # return
   output <- list(
-    summary      = summary_tbl,
-    overlap      = overlap_mat,
-    common_meta  = common_meta,
+    summary = summary_tbl,
+    overlap = overlap_mat,
+    common_meta = common_meta,
     unique_meta = unique_meta,
     datasets = datasets
   )
-  output
   return(output)
 }
 
@@ -128,11 +151,15 @@ get_counts <- function(obj) {
     }
   }
 
-  # ---- v3/v4 fallback (Assay) ----
+  # v3/v4 fallback
   if ("counts" %in% slotNames(assay)) {
     mat <- assay@counts
-    if (is.null(rownames(mat))) rownames(mat) <- featurenames
-    if (is.null(colnames(mat))) colnames(mat) <- cellnames
+    featurenames <- rownames(mat)
+    cellnames    <- colnames(mat)
+    if (is.null(featurenames)) featurenames <- paste0("gene_", seq_len(nrow(mat)))
+    if (is.null(cellnames)) cellnames <- paste0("cell_", seq_len(ncol(mat)))
+    rownames(mat) <- featurenames
+    colnames(mat) <- cellnames
     return(mat)
   }
 
