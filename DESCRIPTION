@@ -4,9 +4,10 @@ Title: A data harmonization package for scRNA-seq data integration projects
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Joseph", "Duraisingh",
+      given = "Joseph", 
+      family = "Duraisingh",
       email = "josephduraisingh@gmail.com",
-      role = c("aut", "cre")
+      role = c("aut", "cre"),
       comment = c(ORCID = "0009-0000-9548-9256")
     )
   )
