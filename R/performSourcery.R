@@ -4,56 +4,79 @@
 # Version: 1.0
 # Bugs and Issues:
 
-
 #' Perform Full SeuratSourcery Workflow
 #'
 #' High-level wrapper that executes the full SeuratSourcery pipeline:
 #' 1. Load datasets with [summonData()],
 #' 2. Inspect with [runeInspection()],
-#' 3. Harmonize genes and metadata,
-#' 4. Integrate data with [basicIntegration()],
-#' 5. Return a unified Seurat object with provenance metadata.
+#' 3. Optionally output graphs with [getSourceryReport()]
+#' 4. Harmonize genes and metadata with [activateRune()]
+#' 5. Inspect again with[runInspection()]
+#' 6. Optionally visualize again with [getSourceryReport()]
+#' 5. Return harmonized seurat objects
 #'
-#' @param path Folder or vector of dataset file paths.
-#' @param method Integration method ("SCT" or "standard").
-#' @param dims Dimensions for integration.
-#' @param visualize Logical; whether to generate plots via [getSourceryReport()].
-#' @param verbose Logical; show progress.
-#' @return A harmonized and integrated Seurat object.
+#' @param path Optional folder path containing dataset files readable by \code{summonData()}.
+#' @param datasets Optional list of Seurat objects. Used if \code{path} is not supplied.
+#' @param visualize Logical; whether to generate summary plots from \code{getSourceryReport()},
+#'  (both before and after harmonization).
+#' @param verbose Logical; whether to print progress messages.
+#'
+#' @return A harmonized list of seurat objects
+#' @examples
 #' @examples
 #' \dontrun{
-#' final_obj <- performSourcery("data/", method = "SCT", visualize = TRUE)
+#'   # Load from folder:
+#'   out <- performSourcery(path = "inst/extdata/demo_datasets")
+#'   # Or supply datasets directly:
+#'   dl <- summonData("inst/extdata/demo_datasets")
+#'   out <- performSourcery(datasets = dl)
 #' }
-#' @seealso [summonData()], [runeInspection()], [basicIntegration()]
+#'
+#' @seealso [summonData()], [runeInspection()], [activateRune()], [getSourceryReport()]
 #' @export
 
-performSourcery<- function(dataset){
+performSourcery <- function(path = NULL,
+                            datasets = NULL,
+                            visualize = TRUE,
+                            verbose = TRUE) {
   # Summon
-  datasets <- summonData("raw_data/")
+  if (!is.null(path)) {
+    if (verbose) message("Summoning datasets from: ", path)
+    raw <- summonData(path)
+  } else {
+    if (is.null(datasets))
+      stop("Supply either `path` or `datasets`.", call. = FALSE)
+    raw <- datasets
+  }
+
+  if (!is.list(raw))
+    stop("`datasets` must be a list of Seurat objects.", call. = FALSE)
+
 
   # Scan (preharmonization)
-  precheck <- runeInspection(datasets)
-  getSourceryReport(precheck)
+  if (verbose) message("Running pre-harmonization inspection...")
+  precheck <- runeInspection(raw)
+
+  if (visualize) {
+    if (verbose) message("Generating pre-harmonization report...")
+    getSourceryReport(precheck)
+  }
 
   # Harmonize
-  datasets <- activateRune(datasets)
+  if (verbose) message("Harmonizing datasets with activateRune()...")
+  datasets <- activateRune(raw)
+
 
   # Scan (postharmonization)
+  if (verbose) message("Running post-harmonization inspection...")
   postcheck <- runeInspection(datasets)
-  getSourceryReport(postcheck)
 
-  #Simple integration pipeline
+  if (visualize) {
+    if (verbose) message("Generating post-harmonization report...")
+    getSourceryReport(postcheck)
+  }
+
+  # return
+  if (verbose) message("SeuratSourcery preprocessing complete.")
   return(datasets)
-}
-
-#' Create demo data for SeuratSourcery vignettes
-#' @noRd
-demo_rune_data <- function(n_genes = 200, n_cells = 50) {
-  mat <- matrix(
-    rpois(n_genes * n_cells, lambda = 5),
-    nrow = n_genes, ncol = n_cells,
-    dimnames = list(paste0("Gene", seq_len(n_genes)),
-                    paste0("Cell", seq_len(n_cells)))
-  )
-  Seurat::CreateSeuratObject(counts = mat)
 }
