@@ -11,29 +11,25 @@ Authors@R: c(
       comment = c(ORCID = "0009-0000-9548-9256")
     )
   )
-Description: SeuratSourcery is a comprehensive all in one tool that allows for
-    various single cell transcriptomic datasets to be merged into a single 
-    differential expression analysis cleanly. Accepted file types so far include
-    .rds, .h5ad, .loom, .csv and 10x reads. Intended for downstream analysis 
-    in Seurat.
+Description: SeuratSourcery provides a streamlined workflow for loading, 
+    harmonizing, and inspecting multiple single-cell RNA sequencing datasets. 
+    The package standardizes gene naming, metadata structures, and feature 
+    compatibility across diverse file formats (.rds, .h5ad, .loom, .csv, 
+    and 10x directories), making datasets ready for downstream analysis in 
+    Seurat. It offers automated quality-control summaries, overlap metrics, 
+    and harmonization utilities that simplify multi-dataset integration.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Depends: R (>= 4.3)
 Imports:
     Seurat (>= 5.0.0),
     SeuratObject (>= 5.0.0),
     cli,
-    dplyr,
     purrr,
-    tibble,
     ggplot2,
-    readr,
-    stringr,
     Matrix,
     rlang,
-    tools,
-    utils
+    tools
 Suggests:
     SeuratDisk,
     zellkonverter,
@@ -41,6 +37,7 @@ Suggests:
     DelayedArray,
     BiocManager,
     biomaRt,
+    dplyr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
