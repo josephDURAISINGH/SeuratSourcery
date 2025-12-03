@@ -31,12 +31,7 @@ Imports:
     rlang,
     tools
 Suggests:
-    SeuratDisk,
-    zellkonverter,
-    HDF5Array,
-    DelayedArray,
     BiocManager,
-    biomaRt,
     dplyr,
     knitr,
     rmarkdown,
