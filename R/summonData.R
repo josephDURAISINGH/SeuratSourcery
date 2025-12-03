@@ -98,8 +98,24 @@ summonData <- function(path = ".", pattern = NULL, include_dirs = TRUE) {
 #'
 #' @export
 
-loadRune <- function(file, data = NULL){
-  return(append(data, list(safely_load_dataset(file))))
+loadRune <- function(file, data = NULL) {
+
+  obj <- safely_load_dataset(file)
+
+  if (is.null(obj)) {
+    cli::cli_alert_warning("Could not load {.file {file}} — returned NULL.")
+    return(data)
+  }
+
+  # Make sure we always return a list
+  if (is.null(data)) {
+    return(list(obj))
+  } else if (is.list(data)) {
+    data[[length(data) + 1]] <- obj
+    return(data)
+  } else {
+    stop("loadRune(): 'data' must be a list or NULL.", call. = FALSE)
+  }
 }
 
 # ---------- Helper Functions -----------------------
@@ -125,7 +141,7 @@ safely_load_dataset <- function(file) {
       if (requireNamespace("SeuratDisk", quietly = TRUE)) {
         SeuratDisk::LoadH5Seurat(file)
       } else {
-        cli::cli_alert_warning("Package 'SeuratDisk' not available; skipping {.file {file}}")
+        cli::cli_alert_warning("Reading h5seurat requires SeuratDisk. Install via remotes::install_github('mojaveazure/seurat-disk')")
         NULL
       }
     },
@@ -134,7 +150,7 @@ safely_load_dataset <- function(file) {
         sce <- zellkonverter::readH5AD(file)
         Seurat::as.Seurat(sce)
       } else {
-        cli::cli_alert_warning("Package 'zellkonverter' not available; skipping {.file {file}}")
+        cli::cli_alert_warning("Reading .h5ad requires zellkonverter. Install via BiocManager::install('zellkonverter')")
         NULL
       }
     },
