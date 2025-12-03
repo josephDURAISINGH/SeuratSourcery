@@ -45,7 +45,6 @@ You can install the development version from GitHub:
 ```{r eval=FALSE}
 require("devtools")
 install_github("josephDURAISINGH/SeuratSourcery")
-library("SeuratSourcery")
 devtools::load_all()
 
 ```
@@ -63,6 +62,7 @@ Optional dependencies for H5AD and H5Seurat support:
 Quickstart Example 1. Load packages Writing
 
 ```{r}
+library(SeuratSourcery)
 library(Seurat)
 library(ggplot2)
 ```
