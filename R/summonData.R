@@ -139,7 +139,7 @@ safely_load_dataset <- function(file) {
     },
     "h5seurat" = {
       if (requireNamespace("SeuratDisk", quietly = TRUE)) {
-        SeuratDisk::LoadH5Seurat(file)
+        getNamespace("SeuratDisk")[["LoadH5Seurat"]](file)
       } else {
         cli::cli_alert_warning("Reading h5seurat requires SeuratDisk. Install via remotes::install_github('mojaveazure/seurat-disk')")
         NULL
