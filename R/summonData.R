@@ -146,6 +146,10 @@ safely_load_dataset <- function(file) {
       }
     },
     "h5ad" = {
+      if (!requireNamespace("zellkonverter", quietly = TRUE)) {
+        cli::cli_alert_warning("zellkonverter not installed; skipping H5AD")
+        return(NULL)
+      }
       if (requireNamespace("zellkonverter", quietly = TRUE)) {
         sce <- zellkonverter::readH5AD(file)
         Seurat::as.Seurat(sce)

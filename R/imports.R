@@ -6,4 +6,8 @@
 #' @importFrom Matrix Matrix rowSums colSums nnzero
 #' @importFrom purrr map map_chr map_dbl map_int map_lgl imap keep compact
 #' @importFrom ggplot2 ggplot aes geom_col geom_text theme_minimal
+#' @importFrom utils head object.size
+#' @importFrom methods as slotNames
+#' @importFrom base requireNamespace
+#' @importFrom base loadNamespace
 NULL

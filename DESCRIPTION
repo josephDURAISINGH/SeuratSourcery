@@ -37,7 +37,11 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    shiny
+    shiny,
+    zellkonverter,
+    SeuratDisk,
+    biomaRt,
+    readr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 VignetteBuilder: knitr
