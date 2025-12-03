@@ -77,7 +77,7 @@ Writing
 demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
 if (dir.exists(demo_dir)) {
    runes <- summonData(demo_dir)
-   print(names(datasets))
+   print(names(runes))
 }
 ```
 
