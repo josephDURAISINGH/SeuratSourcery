@@ -12,6 +12,7 @@
 #' @importFrom Seurat CreateSeuratObject
 #' @examples
 #' demo <- demo_rune_data()
+#'
 #' @export
 demo_rune_data <- function(n_genes = 200, n_cells = 50) {
   mat <- matrix(
