@@ -4,12 +4,12 @@
 \alias{getSourceryReport}
 \title{Visualize Rune Metrics (QC report)}
 \usage{
-getSourceryReport(rune_obj, show_plot = TRUE)
+getSourceryReport(rune_obj, show_plots = TRUE)
 }
 \arguments{
 \item{rune_obj}{The output of \code{\link[=runeInspection]{runeInspection()}}.}
 
-\item{show_plot}{Logical; if true prints out plots}
+\item{show_plots}{Logical; if true prints out plots}
 }
 \value{
 A list containing ggplot2 objects:

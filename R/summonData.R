@@ -19,7 +19,7 @@
 #' @return A named list of Seurat objects, one per dataset successfully loaded.
 #'
 #' @examples
-#' Loading in the demo data
+#' # Loading in the demo data
 #' demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
 #' if (dir.exists(demo_dir)) {
 #'   ds <- summonData(demo_dir)

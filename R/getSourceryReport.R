@@ -10,7 +10,7 @@
 #' including gene counts per dataset and conserved gene proportions.
 #'
 #' @param rune_obj The output of [runeInspection()].
-#' @param show_plot Logical; if true prints out plots
+#' @param show_plots Logical; if true prints out plots
 #'
 #' @return A list containing ggplot2 objects:
 #' \describe{
@@ -43,7 +43,7 @@
 #'
 #' @export
 
-getSourceryReport <- function(rune_obj, show_plot = TRUE) {
+getSourceryReport <- function(rune_obj, show_plots = TRUE) {
 
   required <- c("summary", "overlap", "datasets")
   if (!all(required %in% names(rune_obj))) {
