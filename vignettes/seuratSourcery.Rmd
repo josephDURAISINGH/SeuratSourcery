@@ -1,0 +1,152 @@
+---
+title: "SeuratSourcery: A Quickstart Guide"
+author: "Joseph Duraisingh"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{SeuratSourcery: A Quickstart Guide}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = TRUE
+)
+```
+
+# Introduction
+
+SeuratSourcery provides a lightweight and reproducible framework for
+loading, validating, harmonizing and inspecting single-cell datasets
+before integration.
+
+Key issues found between datasets for these analyses include: -
+Mismatched gene symbols - Missing layers - Duplicated cells - Different
+sized data
+
+SeuratSourcery packages together a toolbox for dealing with these issues
+allowing for a quick and easy visualization of the characteristics of
+the dataset
+
+This vignette goes through: Loading toy datasets, harmonizing assays,
+inspecting dataset properties, generating a sourcery report
+
+# Installation
+
+You can install the development version from GitHub:
+
+```{r}
+require("devtools")
+install_github("josephDURAISINGH/SeuratSourcery")
+library("SeuratSourcery")
+devtools::load_all()
+
+```
+
+Optional dependencies for H5AD and H5Seurat support:
+
+```{r}
+# IF BIOMANAGER ISN'T INSTALLED PLEASE DO SO FOR THIS FUNCTIONALITY
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#   install.packages("BiocManager")
+# 
+# BiocManager::install(c("zellkonverter", "HDF5Array", "DelayedArray"))
+```
+
+Quickstart Example 1. Load packages Writing
+
+```{r}
+library(Seurat)
+library(ggplot2)
+```
+
+2.  Pull our mock data. Mock data was used for lightweight
+    representation of a single cell dataset This can be a list of your
+    own singlecell file paths, or a directory that contains them
+
+Writing
+
+```{r}
+demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
+if (dir.exists(demo_dir)) {
+   runes <- summonData(demo_dir)
+   print(names(datasets))
+}
+```
+
+3.  Inspect and visualize An output of the first set of plots. These
+    plots and tables give a variety of metrics with useful information
+    between the datasets. This information can be used to guide
+    downstream analysis of the data as well as dataset level analysis An
+    example of this is seeing which dataset has more cells, more genes
+    Or how much of
+
+```{r}
+report1 <- runeInspection(runes)
+getSourceryReport(report1, show_plots = FALSE)
+```
+
+4.  Harmonize datasets This standardizes gene identifiers, metadata
+    names, and other conventions to assure compatibility The demo data
+    is very clean so there will be little to no affect of the
+    harmonization in the demo When using your own data this will do
+    things
+
+```{r}
+runes_harmonized <- activateRune(runes)
+```
+
+5.  Inspect and visualize Some cases the harmonization will change the
+    values, so by running the visualization before and after, we can be
+    informed on how the datasets have been affected. Writing
+
+```{r}
+report <- runeInspection(runes_harmonized)
+getSourceryReport(report, show_plots = FALSE)
+```
+
+Rune inspection calculates some key metrics about the dataset. These
+include the number of genes, features, overlapping genes between
+datasets and more. getSourceryReport produces summary tables and plots
+showing dataset sizes, gene overlaps, and metadata coverage.
+
+6.  Downstream analysis The integrated object can then be used in
+    standard Seurat downstream workflows (e.g., PCA, clustering,
+    visualization). Although this is not included in this package (see
+    <https://satijalab.org/seurat/articles/integration_introduction> for
+    more info on this). By inputting
+
+1b. Full pipeline (one-liner) Alternatively, this combines loading,
+harmonization and inspection into a single easy step. Point the path to
+dataset or feed in the group of datasets directly under the datasets =
+parameter Small chance of hitting a bug in which case running
+devtools::load_all() has been known to fix it
+
+Writing
+
+```{r eval=FALSE}
+demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
+print(demo_dir)
+final_obj <- performSourcery(path = demo_dir)
+```
+
+1c. Shiny App To launch Shiny app use the following function to get real
+time visualizations Upload the datasets, multiselect all of the files
+you want to compare and summon data - Example: Browse to
+extdata/demo_datasets and then shift select demo_A to demo_C Then
+activate runes (even without any checked boxes) Then click update
+sourcery report and select the plots you would like to see! Note: Shiny
+not compatible with folders and by extension 10x data in this version
+
+```{r, eval=FALSE}
+runSeuratSourcery()
+```
+
+![](figures/SourcerersApproval.png)
