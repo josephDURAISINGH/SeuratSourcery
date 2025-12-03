@@ -42,7 +42,7 @@ inspecting dataset properties, generating a sourcery report
 
 You can install the development version from GitHub:
 
-```{r}
+```{r eval=FALSE}
 require("devtools")
 install_github("josephDURAISINGH/SeuratSourcery")
 library("SeuratSourcery")
