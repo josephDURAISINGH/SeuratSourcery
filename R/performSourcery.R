@@ -11,7 +11,7 @@
 #' 2. Inspect with [runeInspection()],
 #' 3. Optionally output graphs with [getSourceryReport()]
 #' 4. Harmonize genes and metadata with [activateRune()]
-#' 5. Inspect again with[runInspection()]
+#' 5. Inspect again with[runeInspection()]
 #' 6. Optionally visualize again with [getSourceryReport()]
 #' 5. Return harmonized seurat objects
 #'
@@ -22,7 +22,6 @@
 #' @param verbose Logical; whether to print progress messages.
 #'
 #' @return A harmonized list of seurat objects
-#' @examples
 #' @examples
 #' \dontrun{
 #'   # Load from folder:
