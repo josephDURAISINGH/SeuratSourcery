@@ -99,7 +99,7 @@ summonData <- function(path = ".", pattern = NULL, include_dirs = TRUE) {
 #' @export
 
 loadRune <- function(file, data = NULL){
-  return(append(data, list(safely_load_dataset(path))))
+  return(append(data, list(safely_load_dataset(file))))
 }
 
 # ---------- Helper Functions -----------------------
