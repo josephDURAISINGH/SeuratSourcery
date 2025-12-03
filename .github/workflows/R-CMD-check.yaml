@@ -41,9 +41,9 @@ jobs:
           use-public-rspm: true
 
       - name: Clear pak cache
-          run: |
-            Rscript -e 'if ("pak" %in% rownames(installed.packages())) pak::cache_clean()'
-            rm -rf ~/.cache/R-pkg
+        run: |
+          Rscript -e 'if ("pak" %in% rownames(installed.packages())) pak::cache_clean()'
+          rm -rf ~/.cache/R-pkg
 
 
       - uses: r-lib/actions/setup-r-dependencies@v2
