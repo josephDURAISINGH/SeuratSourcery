@@ -30,9 +30,10 @@ Imports:
     Matrix,
     rlang,
     tools
+    dplyr,
+    tibble
 Suggests:
     BiocManager,
-    dplyr,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
