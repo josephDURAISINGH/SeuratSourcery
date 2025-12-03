@@ -8,10 +8,6 @@ runeInspection(datasets)
 }
 \arguments{
 \item{datasets}{A list of Seurat objects.}
-
-\item{sample_names}{Optional character vector naming each dataset.}
-
-\item{verbose}{Logical; display progress messages.}
 }
 \value{
 A list containing:
@@ -19,19 +15,35 @@ A list containing:
 \item{summary}{Tibble summarizing dataset-level metrics.}
 \item{overlap}{Matrix of feature overlaps between datasets.}
 \item{common_meta}{Vector of metadata fields shared by all datasets.}
-\item{notes}{Text summary.}
+\item{unique_meta}{List of the unique metadata fields}
+\item{datasets}{The input datasets get passed out to be accessed downstream}
 }
 }
 \description{
 Performs a pre-harmonization scan across Seurat objects.
 Summarizes gene counts, identifier types, assay structures, and metadata.
+Compares datasets by quantifying overlaps.
+Uses key lightweight diagnostics to help determine compatability between datsets for integration
+}
+\details{
+Does not modify the seurat objects, only extracts data out of them.
+Checking for differences and whats going on under the hood for each dataset
 }
 \examples{
-\dontrun{
-runes <- loadRune("data/")
-report <- runeInspection(runes)
+#using demo data
+demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
+if (dir.exists(demo_dir)) {
+  runes <- summonData(demo_dir)
+  insp <- runeInspection(runes)
+  print(insp$summary)
 }
+}
+\references{
+Hao Y. et al. (2021). Integrated analysis of multimodal single-cell data.
+Cell 184(13):3573-3587.
 }
 \seealso{
-\code{\link[=getSourceryReport]{getSourceryReport()}}, \code{\link[=runeInspection]{runeInspection()}}
+\code{\link[=summonData]{summonData()}} for loading data,
+\code{\link[=activateRune]{activateRune()}} for harmonization,
+\code{\link[=getSourceryReport]{getSourceryReport()}} for visualizations
 }

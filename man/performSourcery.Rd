@@ -11,32 +11,40 @@ performSourcery(path = NULL, datasets = NULL, visualize = TRUE, verbose = TRUE)
 
 \item{datasets}{Optional list of Seurat objects. Used if \code{path} is not supplied.}
 
-\item{visualize}{Logical; whether to generate summary plots from \code{getSourceryReport()}.}
+\item{visualize}{Logical; whether to generate summary plots from \code{getSourceryReport()},
+(both before and after harmonization).}
 
 \item{verbose}{Logical; whether to print progress messages.}
 }
 \value{
-A harmonized and integrated Seurat object.
+A harmonized list of seurat objects
 }
 \description{
 High-level wrapper that executes the full SeuratSourcery pipeline:
 \enumerate{
 \item Load datasets with \code{\link[=summonData]{summonData()}},
 \item Inspect with \code{\link[=runeInspection]{runeInspection()}},
-\item Harmonize genes and metadata,
-\item Return a unified Seurat object with good metadata.
+\item Optionally output graphs with \code{\link[=getSourceryReport]{getSourceryReport()}}
+\item Harmonize genes and metadata with \code{\link[=activateRune]{activateRune()}}
+\item Inspect again with\code{\link[=runeInspection]{runeInspection()}}
+\item Optionally visualize again with \code{\link[=getSourceryReport]{getSourceryReport()}}
+\item Return harmonized seurat objects
 }
 }
 \examples{
 \dontrun{
   # Load from folder:
-  runes <- performSourcery(path = "inst/extdata")
+  out <- performSourcery(path = "inst/extdata/demo_datasets")
   # Or supply datasets directly:
-  data_list <- summonData("inst/extdata")
-  runes <- performSourcery(datasets = data_list)
+  dl <- summonData("inst/extdata/demo_datasets")
+  out <- performSourcery(datasets = dl)
 }
 
 }
+\references{
+Hao Y. et al. (2021). Integrated analysis of multimodal single-cell data.
+Cell 184(13):3573-3587.
+}
 \seealso{
-summonData, runeInspection, activateRune
+\code{\link[=summonData]{summonData()}}, \code{\link[=runeInspection]{runeInspection()}}, \code{\link[=activateRune]{activateRune()}}, \code{\link[=getSourceryReport]{getSourceryReport()}}
 }

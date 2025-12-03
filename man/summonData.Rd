@@ -7,23 +7,37 @@
 summonData(path = ".", pattern = NULL, include_dirs = TRUE)
 }
 \arguments{
-\item{path}{A folder or vector of file paths to load.}
+\item{path}{A directory to folder or list of files to load.}
 
 \item{pattern}{Optional regex to filter filenames.}
+
+\item{include_dirs}{Logical; if \code{TRUE} (default), subdirectories are checked
+Useful for loading in 10x data directories}
 }
 \value{
-A named list of Seurat objects, one per dataset loaded.
+A named list of Seurat objects, one per dataset successfully loaded.
 }
 \description{
 Loads single-cell datasets of multiple formats into Seurat objects.
 Accepts folders or file paths and automatically detects supported types
 (e.g. RDS, H5Seurat, H5AD, 10X, CSV/TSV).
+Note: RDS and 10x much more thoroughly tested
 }
 \examples{
-\dontrun{
-data_list <- loadRune("data/")
+Loading in the demo data
+demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
+if (dir.exists(demo_dir)) {
+  ds <- summonData(demo_dir)
+  print(names(ds))
 }
+
+}
+\references{
+Hao Y. et al. (2021). Integrated analysis of multimodal single-cell data.
+Cell 184(13):3573-3587.
 }
 \seealso{
-\code{\link[=activateRune]{activateRune()}}, \code{\link[=runeInspection]{runeInspection()}}
+\code{\link[=loadRune]{loadRune()}} for loading in individual files,
+\code{\link[=activateRune]{activateRune()}} for harmonization,
+\code{\link[=runeInspection]{runeInspection()}} for loading qc metrics
 }

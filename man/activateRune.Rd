@@ -2,7 +2,7 @@
 % Please edit documentation in R/activateRune.R
 \name{activateRune}
 \alias{activateRune}
-\title{Activate Runes (Harmonize Datasets)}
+\title{Activate Runes (Harmonize Seurat Objects)}
 \usage{
 activateRune(
   datasets,
@@ -16,15 +16,24 @@ activateRune(
 )
 }
 \arguments{
-\item{datasets}{A list of Seurat objects (e.g., from \code{\link[=summonData]{summonData()}}).}
+\item{datasets}{A list of Seurat objects (e.g., from \code{\link[=summonData]{summonData()}}). Preferred Assay5 objects}
 
-\item{species}{Character; species identifier for ID mapping ("human" or "mouse").}
+\item{normalize}{Logical; if \code{TRUE}, runs \code{NormalizeData()} and \code{FindVariableFeatures()} on each dataset after cleaning.}
 
-\item{id_type}{Character; target gene ID type ("symbol" or "ensembl").}
+\item{fix_gene_names}{Logical; if \code{TRUE}, strips ensembl suffix or uppercases non-Ensembl genes}
 
-\item{remove_dupes}{Logical; whether to collapse duplicated genes by mean expression.}
+\item{drop_zero_genes}{Logical; if \code{TRUE}, removes genes with zero total counts across all cells.}
 
-\item{verbose}{Logical; display progress messages via \code{cli}.}
+\item{drop_duplicates}{Logical; if \code{TRUE}, collapses duplicated gene names
+using mean expression across duplicates.}
+
+\item{map_ids}{Logical; if \code{TRUE}, attempts to map gene identifiers between
+Ensembl and symbol formats using \strong{biomaRt}. Breaks without biomart so make sure it is installed
+this one can remain false unless absolutely needed, and is coated with safety checks}
+
+\item{species}{Character; species identifier for ID mapping (almost always "human" or "mouse").}
+
+\item{id_type}{Character; target gene ID type ("symbol", "ensembl" or "mixed").}
 }
 \value{
 A list of harmonized Seurat objects ready for integration.
@@ -38,14 +47,23 @@ and optionally removing duplicate or low-frequency features.
 This function acts as the primary "harmonization rune" in the SeuratSourcery workflow.
 It standardizes feature identifiers, assay names, and metadata consistency across datasets.
 Datasets that fail harmonization are automatically excluded with a warning.
+This is a key function that cleans up a lot of the mess that single cell data can often have
 }
 \examples{
-\dontrun{
-runes <- loadRune("data/")
-runes <- activateRune(runes, species = "human", id_type = "symbol")
+# Example using included demo data (installed under inst/extdata/)
+demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
+if (dir.exists(demo_dir)) {
+  runes <- summonData(demo_dir)
+  clean_runes <- activateRune(runes, fix_gene_names = TRUE)
 }
 
 }
+\references{
+Hao Y. et al. (2021). Integrated analysis of multimodal single-cell data.
+Cell 184(13):3573-3587.
+Durinck S. et al. (2009). Mapping identifiers for the integration of
+genomic datasets. Nature Methods 6(6): 477-479.
+}
 \seealso{
-\code{\link[=summonData]{summonData()}}, \code{\link[=runeInspection]{runeInspection()}}, \code{\link[=basicIntegration]{basicIntegration()}}
+\code{\link[=summonData]{summonData()}} to load data, \code{\link[=runeInspection]{runeInspection()}} for qc metrics
 }

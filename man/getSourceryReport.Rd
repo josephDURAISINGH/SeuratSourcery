@@ -2,14 +2,14 @@
 % Please edit documentation in R/getSourceryReport.R
 \name{getSourceryReport}
 \alias{getSourceryReport}
-\title{Visualize Rune Metrics}
+\title{Visualize Rune Metrics (QC report)}
 \usage{
 getSourceryReport(rune_obj, show_plots = TRUE)
 }
 \arguments{
-\item{rune_obj}{A list of Seurat objects or the output of \code{\link[=runeInspection]{runeInspection()}}.}
+\item{rune_obj}{The output of \code{\link[=runeInspection]{runeInspection()}}.}
 
-\item{show_plot}{Logical; whether to display plots immediately.}
+\item{show_plot}{Logical; if true prints out plots}
 }
 \value{
 A list containing ggplot2 objects:
@@ -18,7 +18,8 @@ A list containing ggplot2 objects:
 \item{qc}{QC metrics table.}
 \item{overlap}{Gene overlap matrix.}
 \item{conserved}{Summary of conserved/shared genes.}
-\item{plots}{A list of ggplot2 objects.}
+\item{plots}{A list of ggplot2 objects: numgenes, numcells, numfeatures,
+mito content (genes that start with MT-), umi and conserved genes}
 }
 }
 \description{
@@ -26,12 +27,19 @@ Produces graphical summaries of dataset characteristics prior to integration,
 including gene counts per dataset and conserved gene proportions.
 }
 \examples{
-\dontrun{
-report <- runeInspection(runes)
-getSourceryReport(report)
+demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
+if (dir.exists(demo_dir)) {
+  runes <- summonData(demo_dir)
+  insp <- runeInspection(runes)
+  rep <- getSourceryReport(insp, show_plots = FALSE)
+  rep$plots$genes
 }
 
 }
+\references{
+Hao Y. et al. (2021). Integrated analysis of multimodal single-cell data.
+Cell 184(13):3573-3587.
+}
 \seealso{
-\code{\link[=runeInspection]{runeInspection()}}, \code{\link[=performSourcery]{performSourcery()}}
+\code{\link[=runeInspection]{runeInspection()}}, \code{\link[=performSourcery]{performSourcery()}}, \code{\link[=activateRune]{activateRune()}}, \code{\link[=summonData]{summonData()}}
 }

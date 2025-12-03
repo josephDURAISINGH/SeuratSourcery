@@ -4,21 +4,26 @@
 \alias{loadRune}
 \title{Adds in a single dataset as a seurat object}
 \usage{
-loadRune(path, data = NULL)
+loadRune(file, data = NULL)
 }
 \arguments{
-\item{path}{filepath of data to be loaded}
+\item{file}{filepath of data object to be loaded}
 
-\item{data}{whatever object the other already added datasets are stored in}
+\item{data}{optional parameter for whatever object the other already added datasets are stored in,
+to append them into a list}
 }
 \value{
-List of seurat objects with new one included
+List of seurat objects with new one appended
 }
 \description{
 Adds in a single dataset as a seurat object
 }
 \examples{
-\dontrun{
-data_list <- loadRune("path")
+# Adding a single dataset from extdata
+demo_file <- system.file("extdata/demo_datasets/pbmc_demo1.rds",
+                         package = "SeuratSourcery")
+if (file.exists(demo_file)) {
+  lst <- loadRune(demo_file)
 }
+
 }
