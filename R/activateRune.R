@@ -18,10 +18,11 @@
 #'   using mean expression across duplicates.
 #' @param map_ids Logical; if `TRUE`, attempts to map gene identifiers between
 #'   Ensembl and symbol formats using **biomaRt**. Breaks without biomart so make sure it is installed
-#'   this one can remain false unless absolutely needed.
+#'   this one can remain false unless absolutely needed, and is coated with safety checks
 #' @param species Character; species identifier for ID mapping (almost always "human" or "mouse").
 #' @param id_type Character; target gene ID type ("symbol", "ensembl" or "mixed").
 #' @return A list of harmonized Seurat objects ready for integration.
+#'
 #' @details
 #' This function acts as the primary "harmonization rune" in the SeuratSourcery workflow.
 #' It standardizes feature identifiers, assay names, and metadata consistency across datasets.
@@ -37,8 +38,16 @@
 #' }
 #'
 #' @seealso [summonData()] to load data, [runeInspection()] for qc metrics
+#'
+#' @references
+#' Hao Y. et al. (2021). Integrated analysis of multimodal single-cell data.
+#' Cell 184(13):3573-3587.
+#' Durinck S. et al. (2009). Mapping identifiers for the integration of
+#' genomic datasets. Nature Methods 6(6): 477-479.
+#'
+#' @importFrom Seurat GetAssayData NormalizeData FindVariableFeatures
+#'
 #' @export
-
 
 # --------- outwards functions ------------
 
@@ -64,7 +73,6 @@ activateRune <- function(
     cli::cli_h2("Rune: {nm}")
 
     # check valid format
-    # --- Step 0: ensure consistent assay structure ---
     obj <- tryCatch(standardize_assay_structure(obj), error = function(e) obj)
 
     if (fix_gene_names) {
@@ -257,4 +265,3 @@ ensure_unique_genes <- function(obj) {
 
   return(obj)
 }
-

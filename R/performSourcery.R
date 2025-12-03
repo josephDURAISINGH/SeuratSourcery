@@ -33,6 +33,11 @@
 #' }
 #'
 #' @seealso [summonData()], [runeInspection()], [activateRune()], [getSourceryReport()]
+#'
+#' @references
+#' Hao Y. et al. (2021). Integrated analysis of multimodal single-cell data.
+#' Cell 184(13):3573-3587.
+#'
 #' @export
 
 performSourcery <- function(path = NULL,

@@ -34,6 +34,13 @@
 #'
 #' @seealso
 #' [runeInspection()], [performSourcery()], [activateRune()], [summonData()]
+#'
+#' @references
+#' Hao Y. et al. (2021). Integrated analysis of multimodal single-cell data.
+#' Cell 184(13):3573-3587.
+#'
+#' @importFrom ggplot2 ggplot aes geom_col geom_text theme_minimal
+#'
 #' @export
 
 getSourceryReport <- function(rune_obj, show_plots = TRUE) {
@@ -81,12 +88,12 @@ getSourceryReport <- function(rune_obj, show_plots = TRUE) {
   )
 
   df_conserved <- tibble::tibble(
-    Category = c("AllGenes", "Shared100", "Shared75plus", "Shared50plus"),
+    Category = c("AllGenes", "Shared50plus", "Shared75plus", "Shared100"),
     Genes = c(
       length(all_genes),
-      sum(presence == 1),
+      sum(presence >= 0.5),
       sum(presence >= 0.75),
-      sum(presence >= 0.5)
+      sum(presence == 1)
     )
   )
 
