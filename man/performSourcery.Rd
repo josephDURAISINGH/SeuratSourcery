@@ -4,18 +4,16 @@
 \alias{performSourcery}
 \title{Perform Full SeuratSourcery Workflow}
 \usage{
-performSourcery(dataset)
+performSourcery(path = NULL, datasets = NULL, visualize = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{path}{Folder or vector of dataset file paths.}
+\item{path}{Optional folder path containing dataset files readable by \code{summonData()}.}
 
-\item{method}{Integration method ("SCT" or "standard").}
+\item{datasets}{Optional list of Seurat objects. Used if \code{path} is not supplied.}
 
-\item{dims}{Dimensions for integration.}
+\item{visualize}{Logical; whether to generate summary plots from \code{getSourceryReport()}.}
 
-\item{visualize}{Logical; whether to generate plots via \code{\link[=getSourceryReport]{getSourceryReport()}}.}
-
-\item{verbose}{Logical; show progress.}
+\item{verbose}{Logical; whether to print progress messages.}
 }
 \value{
 A harmonized and integrated Seurat object.
@@ -26,15 +24,19 @@ High-level wrapper that executes the full SeuratSourcery pipeline:
 \item Load datasets with \code{\link[=summonData]{summonData()}},
 \item Inspect with \code{\link[=runeInspection]{runeInspection()}},
 \item Harmonize genes and metadata,
-\item Integrate data with \code{\link[=basicIntegration]{basicIntegration()}},
-\item Return a unified Seurat object with provenance metadata.
+\item Return a unified Seurat object with good metadata.
 }
 }
 \examples{
 \dontrun{
-final_obj <- performSourcery("data/", method = "SCT", visualize = TRUE)
+  # Load from folder:
+  runes <- performSourcery(path = "inst/extdata")
+  # Or supply datasets directly:
+  data_list <- summonData("inst/extdata")
+  runes <- performSourcery(datasets = data_list)
 }
+
 }
 \seealso{
-\code{\link[=summonData]{summonData()}}, \code{\link[=runeInspection]{runeInspection()}}, \code{\link[=basicIntegration]{basicIntegration()}}
+summonData, runeInspection, activateRune
 }

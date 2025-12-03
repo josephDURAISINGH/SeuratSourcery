@@ -6,9 +6,13 @@
 \usage{
 activateRune(
   datasets,
+  normalize = FALSE,
+  fix_gene_names = TRUE,
+  drop_zero_genes = TRUE,
+  drop_duplicates = TRUE,
+  map_ids = FALSE,
   species = "human",
-  id_type = "symbol",
-  remove_dupes = TRUE
+  id_type = "symbol"
 )
 }
 \arguments{

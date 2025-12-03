@@ -4,20 +4,21 @@
 \alias{getSourceryReport}
 \title{Visualize Rune Metrics}
 \usage{
-getSourceryReport(datasets, overlap_results = NULL, show_plot = TRUE)
+getSourceryReport(rune_obj, show_plots = TRUE)
 }
 \arguments{
-\item{datasets}{A list of Seurat objects or the output of \code{\link[=runeInspection]{runeInspection()}}.}
-
-\item{overlap_results}{Optional precomputed overlap matrix.}
+\item{rune_obj}{A list of Seurat objects or the output of \code{\link[=runeInspection]{runeInspection()}}.}
 
 \item{show_plot}{Logical; whether to display plots immediately.}
 }
 \value{
 A list containing ggplot2 objects:
 \describe{
-\item{gene_bar}{Bar plot of total genes per dataset.}
-\item{conserved_bar}{Bar plot of conserved genes across datasets.}
+\item{summary}{Dataset-level gene/cell summary table.}
+\item{qc}{QC metrics table.}
+\item{overlap}{Gene overlap matrix.}
+\item{conserved}{Summary of conserved/shared genes.}
+\item{plots}{A list of ggplot2 objects.}
 }
 }
 \description{
@@ -27,8 +28,9 @@ including gene counts per dataset and conserved gene proportions.
 \examples{
 \dontrun{
 report <- runeInspection(runes)
-plots <- getSourceryReport(report)
+getSourceryReport(report)
 }
+
 }
 \seealso{
 \code{\link[=runeInspection]{runeInspection()}}, \code{\link[=performSourcery]{performSourcery()}}

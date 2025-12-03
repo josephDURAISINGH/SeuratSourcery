@@ -4,7 +4,7 @@
 \alias{runeInspection}
 \title{Inspect Runes for Compatibility}
 \usage{
-runeInspection(datasets, sample_names = NULL)
+runeInspection(datasets)
 }
 \arguments{
 \item{datasets}{A list of Seurat objects.}
