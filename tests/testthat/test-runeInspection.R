@@ -2,7 +2,7 @@ context("Valud metric outputs")
 library(SeuratSourcery)
 
 test_that("runeInspection computes metrics correctly", {
-  runes <- list(A = demo_small(), B = demo_small())
+  runes <- list(A = demo_rune_data(), B = demo_rune_data())
   out <- runeInspection(runes)
 
   expect_true(is.list(out))

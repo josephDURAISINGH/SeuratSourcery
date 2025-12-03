@@ -2,7 +2,7 @@ context("Check activateRune actually modifies the seurat objects during harmoniz
 library(SeuratSourcery)
 
 test_that("activateRune harmonizes basic Seurat objects", {
-  runes <- list(A = demo_small(), B = demo_small())
+  runes <- list(A = demo_rune_data(), B = demo_rune_data())
   out <- activateRune(runes)
 
   expect_type(out, "list")

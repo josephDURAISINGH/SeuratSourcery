@@ -2,7 +2,7 @@ context("make sure pipeline works")
 library(SeuratSourcery)
 
 test_that("performSourcery runs full pipeline", {
-  runes <- list(A = demo_small(), B = demo_small())
+  runes <- list(A = demo_rune_data(), B = demo_rune_data())
 
   out <- performSourcery(datasets = runes, visualize = FALSE, verbose = FALSE)
 
