@@ -4,7 +4,7 @@
 \alias{getSourceryReport}
 \title{Visualize Rune Metrics (QC report)}
 \usage{
-getSourceryReport(rune_obj, show_plots = TRUE)
+getSourceryReport(rune_obj, show_plot = TRUE)
 }
 \arguments{
 \item{rune_obj}{The output of \code{\link[=runeInspection]{runeInspection()}}.}

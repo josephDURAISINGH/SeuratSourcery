@@ -90,7 +90,7 @@ if (dir.exists(demo_dir)) {
 
 ```{r}
 report1 <- runeInspection(runes)
-getSourceryReport(report1, show_plots = FALSE)
+getSourceryReport(report1, show_plot = FALSE)
 ```
 
 4.  Harmonize datasets This standardizes gene identifiers, metadata
@@ -109,7 +109,7 @@ runes_harmonized <- activateRune(runes)
 
 ```{r}
 report <- runeInspection(runes_harmonized)
-getSourceryReport(report, show_plots = FALSE)
+getSourceryReport(report, show_plot = FALSE)
 ```
 
 Rune inspection calculates some key metrics about the dataset. These

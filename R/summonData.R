@@ -103,7 +103,7 @@ loadRune <- function(file, data = NULL) {
   obj <- safely_load_dataset(file)
 
   if (is.null(obj)) {
-    cli::cli_alert_warning("Could not load {.file {file}} — returned NULL.")
+    cli::cli_alert_warning("Could not load {.file {file}}; returned NULL.")
     return(data)
   }
 

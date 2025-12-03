@@ -43,7 +43,7 @@
 #'
 #' @export
 
-getSourceryReport <- function(rune_obj, show_plots = TRUE) {
+getSourceryReport <- function(rune_obj, show_plot = TRUE) {
 
   required <- c("summary", "overlap", "datasets")
   if (!all(required %in% names(rune_obj))) {
