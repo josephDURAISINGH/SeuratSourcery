@@ -31,7 +31,8 @@ Imports:
     rlang,
     tools,
     dplyr,
-    tibble
+    tibble,
+    method
 Suggests:
     BiocManager,
     knitr,
