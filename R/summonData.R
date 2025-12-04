@@ -8,7 +8,7 @@
 #'
 #' Loads single-cell datasets of multiple formats into Seurat objects.
 #' Accepts folders or file paths and automatically detects supported types
-#' (e.g. RDS, H5Seurat, H5AD, 10X, CSV/TSV).
+#' (e.g. RDS, H5AD, 10X, CSV/TSV).
 #' Note: RDS and 10x much more thoroughly tested
 #'
 #' @param path A directory to folder or list of files to load.
@@ -136,14 +136,6 @@ safely_load_dataset <- function(file) {
         cli::cli_alert_warning("{.file {file}} is an RDS but not a Seurat object")
         NULL  # skip
       } else x
-    },
-    "h5seurat" = {
-      if (requireNamespace("SeuratDisk", quietly = TRUE)) {
-        getNamespace("SeuratDisk")[["LoadH5Seurat"]](file)
-      } else {
-        cli::cli_alert_warning("Reading h5seurat requires SeuratDisk. Install via remotes::install_github('mojaveazure/seurat-disk')")
-        NULL
-      }
     },
     "h5ad" = {
       if (requireNamespace("zellkonverter", quietly = TRUE)) {

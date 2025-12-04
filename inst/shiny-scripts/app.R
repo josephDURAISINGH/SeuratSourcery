@@ -97,7 +97,6 @@ ui <- fluidPage(
                 multiple = TRUE,
                 accept = c(
                   ".rds", ".rds.gz",
-                  ".h5seurat", ".h5seurat.gz",
                   ".h5ad", ".h5ad.gz",
                   ".csv", ".csv.gz",
                   ".tsv", ".tsv.gz",

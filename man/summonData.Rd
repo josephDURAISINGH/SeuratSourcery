@@ -20,7 +20,7 @@ A named list of Seurat objects, one per dataset successfully loaded.
 \description{
 Loads single-cell datasets of multiple formats into Seurat objects.
 Accepts folders or file paths and automatically detects supported types
-(e.g. RDS, H5Seurat, H5AD, 10X, CSV/TSV).
+(e.g. RDS, H5AD, 10X, CSV/TSV).
 Note: RDS and 10x much more thoroughly tested
 }
 \examples{
