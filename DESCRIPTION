@@ -32,13 +32,13 @@ Imports:
     tools,
     dplyr,
     tibble,
+    shiny,
     methods
 Suggests:
     BiocManager,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    shiny,
     zellkonverter,
     biomaRt,
     readr

@@ -1,14 +1,5 @@
 options(shiny.maxRequestSize = 4096 * 1024^2)  # 4 GB
 
-library(shiny)
-library(ggplot2)
-library(purrr)
-library(dplyr)
-library(Matrix)
-library(Seurat)
-library(SeuratObject)
-library(tools)
-
 # Make sure these come from your package
 # source("R/summonData.R")
 # source("R/getSourceryReport.R")
@@ -86,7 +77,7 @@ prepare_upload_dir <- function(uploaded) {
 # UI
 # ============================================================
 
-ui <- fluidPage(
+ui <- shiny::fluidPage(
 
   titlePanel("SeuratSourcery — Dataset Inspection Dashboard"),
 
@@ -238,4 +229,4 @@ server <- function(input, output, session) {
 
 }
 
-shinyApp(ui, server)
+shiny::shinyApp(ui, server)
