@@ -79,7 +79,9 @@ for maximum effectiveness
 To install the latest version of the package:
 
 ```{r}
-install.packages("devtools")
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
 library(devtools)
 devtools::install_github("josephDURAISINGH/SeuratSourcery", build_vignettes = TRUE)
 library(SeuratSourcery)
@@ -126,11 +128,13 @@ browseVignettes("SeuratSourcery")
     whole pipeline: loading input -\> inspection -\> harmonization -\>
     inspection -\> output.
 
-6.  ***runSeuratSourcery()*** shiny app implementation.
+6.  ***runSeuratSourcery()*** shiny app implementation. Note:
+    incompatible with 10x files so far
 
 Recommended to download your own data since it single cell data is too
 large to include here but can use ***demo_rune_data()*** to load in a
-small mock dataset
+small mock data set. Additionally when using shiny app, click load demo
+data for a sample data set to load automatically.
 
 Pipeline
 
@@ -138,7 +142,7 @@ Pipeline
             +-----------------------------+
             |     Input Datasets          |
             |  (.rds / .csv / .h5ad /     |
-            |   .loom / 10X folders)      |
+            |       10X folders)          |
             +--------------+--------------+
                            |
                      summonData()
