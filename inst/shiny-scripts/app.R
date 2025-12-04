@@ -95,6 +95,10 @@ ui <- shiny::fluidPage(
                   ".h5"
                 )),
 
+      actionButton("load_demo", "Load Demo Dataset", class = "btn-info"),
+
+      br(), br(),
+
       actionButton("load_data", "Summon Data", class = "btn-primary"),
 
       hr(),
@@ -172,6 +176,33 @@ server <- function(input, output, session) {
     showNotification("Datasets loaded successfully!", type = "message")
   })
 
+  observeEvent(input$load_demo, {
+
+    demo_dir <- system.file("extdata/demo_datasets", package = "SeuratSourcery")
+
+    if (demo_dir == "") {
+      showNotification("No demo data found in this package installation.", type = "error")
+      return(NULL)
+    }
+
+    # summonData() expects a folder path
+    ds <- tryCatch(
+      summonData(demo_dir),
+      error = function(e) {
+        showNotification(
+          paste("Error loading demo dataset:", e$message),
+          type = "error"
+        )
+        return(NULL)
+      }
+    )
+
+    raw_datasets(ds)
+    activated_datasets(NULL)
+    report_cache(NULL)
+
+    showNotification("Demo dataset loaded!", type = "message")
+  })
 
   # 2. ACTIVATE RUNE ------------------------------------------------
 
