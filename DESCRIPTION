@@ -32,7 +32,7 @@ Imports:
     tools,
     dplyr,
     tibble,
-    method
+    methods
 Suggests:
     BiocManager,
     knitr,
